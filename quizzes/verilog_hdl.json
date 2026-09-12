@@ -1,0 +1,552 @@
+[
+  {
+    "question": "What is the primary purpose of the Verilog Stratified Event Queue?",
+    "options": [
+      "To convert Verilog RTL directly into physical CMOS gates.",
+      "To order and execute concurrent hardware events deterministically on a single-threaded software CPU.",
+      "To allocate physical memory for multi-dimensional arrays.",
+      "To automatically insert clock buffers during physical design."
+    ],
+    "correct_index": 1,
+    "explanation": "Physical hardware operates entirely in parallel. A software simulator running on a standard CPU can only execute one line of code at a time. The Stratified Event Queue is the algorithmic scheduling engine that orders simultaneous events (like evaluating inputs, updating flip-flops, and triggering monitors) into strict phases to guarantee deterministic and accurate hardware simulation."
+  },
+  {
+    "question": "In which region of the Verilog Event Queue are the right-hand sides (RHS) of non-blocking assignments evaluated?",
+    "options": [
+      "Active Region",
+      "Inactive Region",
+      "NBA (Non-Blocking Assign) Region",
+      "Postponed Region"
+    ],
+    "correct_index": 0,
+    "explanation": "The evaluation of the RHS of a non-blocking assignment (<=) happens immediately in the Active Region alongside blocking assignments. However, the actual updating of the LHS variable is deferred to the NBA Region at the end of the time step."
+  },
+  {
+    "question": "Why is the #0 delay statement (e.g., #0 a = b;) strictly banned in commercial RTL coding guidelines?",
+    "options": [
+      "It causes the simulator to skip the next clock edge entirely.",
+      "It defers execution to the Inactive Region, creating non-deterministic simulation race conditions that cannot be synthesized into silicon.",
+      "It consumes excessive dynamic power in the synthesized chip.",
+      "It forces all signals to become High-Impedance (Z)."
+    ],
+    "correct_index": 1,
+    "explanation": "A #0 delay does not move execution to the next clock cycle; it pushes the event into the Inactive Region of the exact same time step. This artificial software delay creates unpredictable race conditions between concurrent blocks and has absolutely no physical equivalent in silicon hardware."
+  },
+  {
+    "question": "What happens at simulation time t=0 to an uninitialized 'wire' and an uninitialized 'reg'?",
+    "options": [
+      "Both default to 0.",
+      "wire defaults to X (Unknown), reg defaults to Z (High Impedance).",
+      "wire defaults to Z (High Impedance), reg defaults to X (Unknown).",
+      "Both default to X."
+    ],
+    "correct_index": 2,
+    "explanation": "A wire physically represents a physical connection. If nothing is actively driving it at startup, it floats in a High-Impedance (Z) state. A reg represents a variable or memory element; before it is explicitly written to, its initial stored state is logically Unknown (X)."
+  },
+  {
+    "question": "What is the result of the logical equality comparison (4'b10xz == 4'b10xz)?",
+    "options": [
+      "1'b1 (True)",
+      "1'b0 (False)",
+      "1'bx (Unknown)",
+      "1'bz (High Impedance)"
+    ],
+    "correct_index": 2,
+    "explanation": "The logical equality operator (==) evaluates to Unknown (X) if either operand contains an X or Z bit, because it represents hardware that cannot definitively know the logic level. To check for exact literal matches including X and Z in a testbench, you must use the case equality operator (===)."
+  },
+  {
+    "question": "Which system task executes in the Postponed Region of the event queue, ensuring it only prints after all signals have stabilized for that time step?",
+    "options": [
+      "$display",
+      "$write",
+      "$strobe",
+      "$finish"
+    ],
+    "correct_index": 2,
+    "explanation": "While $display prints immediately in the Active Region (potentially printing an old value before a non-blocking update occurs), $strobe waits until the Postponed Region at the very end of the time step. This guarantees it prints the final, settled values of all variables."
+  },
+  {
+    "question": "What is the structural difference between a Packed array and an Unpacked array in Verilog?",
+    "options": [
+      "Packed arrays are declared after the variable name; Unpacked arrays are declared before.",
+      "Packed arrays represent a contiguous bit-vector (bus); Unpacked arrays represent separate memory words (like a RAM block).",
+      "Packed arrays can only store 2-state logic; Unpacked arrays store 4-state logic.",
+      "Unpacked arrays are synthesizable; Packed arrays are simulation-only."
+    ],
+    "correct_index": 1,
+    "explanation": "A Packed array (e.g., wire [7:0] bus;) is declared before the identifier and represents a single, continuous bus in memory, allowing easy bit-slicing. An Unpacked array (e.g., reg [7:0] mem [0:1023];) is declared after the identifier and models discrete memory locations that must be addressed individually."
+  },
+  {
+    "question": "What happens in a Verilog expression if you mix a signed variable with an unsigned variable (e.g., signed_a + unsigned_b)?",
+    "options": [
+      "The unsigned variable is automatically promoted to signed.",
+      "The compilation fails with a type-mismatch error.",
+      "Verilog automatically forces ALL operands in the expression to be evaluated as unsigned.",
+      "The result takes the sign of the larger bit-width variable."
+    ],
+    "correct_index": 2,
+    "explanation": "This is a massive trap in RTL design. If even a single operand in an equation is unsigned, Verilog's rules dictate that the entire expression is evaluated using unsigned arithmetic. This can silently destroy negative values. You must explicitly cast the unsigned operand using $signed() to prevent this."
+  },
+  {
+    "question": "How do you generate an odd-parity bit for an 8-bit bus (data[7:0]) using a single reduction operator?",
+    "options": [
+      "assign parity = &data;",
+      "assign parity = |data;",
+      "assign parity = ^data;",
+      "assign parity = !data;"
+    ],
+    "correct_index": 2,
+    "explanation": "A reduction operator applies a bitwise function across all bits of a single vector. The XOR reduction operator (^data) XORs all 8 bits together. Since XOR acts as an odd-parity generator, it will output a 1 if there is an odd number of 1s in the bus."
+  },
+  {
+    "question": "What is the value of 'res' after executing: reg [3:0] val = 4'b1000; wire [3:0] res = val >>> 2; ?",
+    "options": [
+      "4'b0010",
+      "4'b1110",
+      "4'b1000",
+      "4'b0000"
+    ],
+    "correct_index": 0,
+    "explanation": "Even though the arithmetic shift right operator (>>>) is used, the variable 'val' was NOT explicitly declared with the 'signed' keyword. Because it defaults to unsigned, the arithmetic shift behaves exactly like a logical shift and fills the vacated MSBs with zeros, resulting in 4'b0010."
+  },
+  {
+    "question": "Which single-line expression properly sign-extends a 4-bit signed signal (in[3:0]) to an 8-bit bus (out[7:0])?",
+    "options": [
+      "assign out = {4'b0000, in[3:0]};",
+      "assign out = {{4{in[3]}}, in[3:0]};",
+      "assign out = {in[3:0], 4'b0000};",
+      "assign out = $extend(in, 8);"
+    ],
+    "correct_index": 1,
+    "explanation": "To preserve the value of a 2's complement negative number, you must copy the sign bit (the MSB, in[3]) into all the new upper bits. The replication operator {4{in[3]}} duplicates the sign bit 4 times, which is then concatenated with the original 4 bits."
+  },
+  {
+    "question": "What is the difference between an 'initial' block and an 'always' block?",
+    "options": [
+      "initial blocks synthesize into RAM; always blocks synthesize into ROM.",
+      "initial executes exactly once at time 0; always executes in an infinite loop triggered by its sensitivity list.",
+      "initial can only contain blocking assignments; always can only contain non-blocking.",
+      "There is no functional difference; they are just aliases for different coding styles."
+    ],
+    "correct_index": 1,
+    "explanation": "An 'initial' block runs a single time from top to bottom starting at t=0, making it ideal for testbench stimulus. An 'always' block loops forever, waiting for the signals in its sensitivity list to change before executing its contents, perfectly modeling reactive hardware."
+  },
+  {
+    "question": "Why is always @(*) the standard for modeling combinational logic instead of always @(a, b)?",
+    "options": [
+      "It executes faster in simulation.",
+      "It automatically infers ALL signals read inside the block into the sensitivity list, preventing simulation-synthesis mismatches caused by forgotten signals.",
+      "It prevents latch inferencing.",
+      "It forces the synthesizer to use low-power gates."
+    ],
+    "correct_index": 1,
+    "explanation": "If you manually write always @(a) but use signal 'b' inside the block, the simulator will ignore changes on 'b', acting like a latch. The synthesis tool will ignore the list and build a combinational gate anyway. Using @(*) guarantees the simulator auto-includes 'b', ensuring your simulation perfectly matches the synthesized silicon."
+  },
+  {
+    "question": "What fatal hardware structure is inferred if you forget an 'else' or 'default' clause in a combinational always @(*) block?",
+    "options": [
+      "A D-Flip-Flop",
+      "A Level-Sensitive Latch",
+      "A Combinational Loop",
+      "A Tri-state Buffer"
+    ],
+    "correct_index": 1,
+    "explanation": "If you do not specify what a combinational output should be for every possible input condition, the synthesis tool assumes the output must hold its previous value. Because it lacks a clock edge trigger, it physically inserts a Level-Sensitive Latch, which ruins static timing analysis (STA) in pipelined ASICs."
+  },
+  {
+    "question": "When designing a D-Flip-Flop with an Asynchronous Active-Low reset, what must be in the sensitivity list?",
+    "options": [
+      "always @(posedge clk)",
+      "always @(posedge clk or posedge rst_n)",
+      "always @(posedge clk or negedge rst_n)",
+      "always @(*)"
+    ],
+    "correct_index": 2,
+    "explanation": "An asynchronous reset must be able to trigger the flip-flop independently of the clock. Therefore, the falling edge of the active-low reset (negedge rst_n) must explicitly be included in the sensitivity list alongside the clock."
+  },
+  {
+    "question": "What is the Golden Rule of Verilog Assignments?",
+    "options": [
+      "Use <= for testbenches, and = for RTL.",
+      "Use = for Combinational logic, and <= for Sequential logic. Never mix them in the same block.",
+      "Use <= for Combinational logic, and = for Sequential logic.",
+      "Always use = unless crossing clock domains."
+    ],
+    "correct_index": 1,
+    "explanation": "Blocking assignments (=) evaluate and update instantly, mimicking immediate combinational gate flow. Non-blocking assignments (<=) evaluate now but update at the end of the time step, perfectly modeling the parallel clock-edge capture behavior of sequential flip-flops."
+  },
+  {
+    "question": "Examine this block: \nalways @(posedge clk) begin\n  q1 = d;\n  q2 = q1;\n  q3 = q2;\nend\nWhat physical hardware is synthesized?",
+    "options": [
+      "A 3-stage Shift Register (3 Flip-Flops)",
+      "Exactly ONE Flip-Flop driving three parallel wires",
+      "A combinational feedback loop",
+      "A RAM block"
+    ],
+    "correct_index": 1,
+    "explanation": "Because blocking assignments (=) update instantly, q1 takes the value of d. On the very next line, q2 reads the NEW value of q1 (which is d). q3 reads the NEW value of q2 (which is d). Ultimately, all three variables get connected to the exact same single flip-flop output."
+  },
+  {
+    "question": "In a simulation, what happens if two 'initial' blocks assign contradictory values to the same variable at time 0?",
+    "options": [
+      "The simulator throws a compilation error.",
+      "The variable evaluates to X.",
+      "A race condition occurs; the final value is unpredictable and depends on the tool's hidden execution order.",
+      "The variable evaluates to Z."
+    ],
+    "correct_index": 2,
+    "explanation": "Because both initial blocks are scheduled in the Active region at t=0, they execute concurrently. Verilog does not define which block executes first. Whichever block the simulator happens to process last will 'win' and overwrite the variable, creating a classic non-deterministic race condition."
+  },
+  {
+    "question": "Why is a Combinational Loop (e.g., assign a = a & b;) a severe design error in RTL?",
+    "options": [
+      "It requires too many routing resources.",
+      "It causes infinite zero-delay oscillations that freeze simulators and make Static Timing Analysis (STA) impossible.",
+      "It creates an accidental flip-flop.",
+      "It forces the synthesis tool to use One-Hot encoding."
+    ],
+    "correct_index": 1,
+    "explanation": "A combinational loop feeds an output instantly back into its own input without passing through a clocked memory element. If the logic inverts, it becomes a ring oscillator, looping infinitely in zero simulation time (delta-cycle lockup) and breaking all timing closure algorithms."
+  },
+  {
+    "question": "What is the primary difference between a Task and a Function in Verilog?",
+    "options": [
+      "Tasks return a single value; Functions return multiple values.",
+      "Functions must execute in zero simulation time (no delays or clock edges allowed); Tasks can consume simulation time.",
+      "Functions are only for testbenches; Tasks are only for synthesis.",
+      "Tasks can be called from inside continuous assign statements; Functions cannot."
+    ],
+    "correct_index": 1,
+    "explanation": "Functions act like mathematical equations; they evaluate inputs and return a result instantly without any notion of time. Tasks can contain #delays, @(posedge clk) triggers, and wait statements, meaning their execution spans across simulation time."
+  },
+  {
+    "question": "Can a Verilog Function call a Task?",
+    "options": [
+      "Yes, freely.",
+      "Yes, but only if the task has no inputs.",
+      "No, because a Task might consume time, which would violate the Function's strict zero-time execution rule.",
+      "No, because tasks do not return values."
+    ],
+    "correct_index": 2,
+    "explanation": "Since a Function is strictly required to execute in zero simulation time, it is explicitly forbidden from calling a Task, as the Task might contain delays or event controls that would pause execution."
+  },
+  {
+    "question": "What does the 'automatic' keyword do when declaring a task or function?",
+    "options": [
+      "It automatically generates a testbench for the task.",
+      "It forces the simulator to allocate dynamic, unique memory on the stack for each call, allowing for recursion and safe concurrent calls.",
+      "It synthesizes the task into an automatic state machine.",
+      "It automatically connects undefined ports to ground."
+    ],
+    "correct_index": 1,
+    "explanation": "By default, variables inside Verilog tasks/functions are static (shared memory). If two blocks call the same task simultaneously, they will overwrite each other's data. 'automatic' instantiates fresh local variables for every single call, making it re-entrant and thread-safe."
+  },
+  {
+    "question": "In the industry-standard 3-Always Block FSM architecture, what is the role of the sequential block?",
+    "options": [
+      "To calculate the next state using if/case statements.",
+      "To update 'current_state <= next_state' strictly on the clock edge.",
+      "To drive the output pins combinationally.",
+      "To initialize the FSM variables to zero."
+    ],
+    "correct_index": 1,
+    "explanation": "The 3-block FSM separates memory from logic. Block 1 is a simple sequential flip-flop that transitions current_state to next_state on the clock. Block 2 is purely combinational logic calculating the next state. Block 3 handles outputs."
+  },
+  {
+    "question": "Why is 'localparam' universally preferred over '`define' or 'parameter' for defining FSM states?",
+    "options": [
+      "It compiles faster.",
+      "`define pollutes the global namespace across all files; parameter allows higher-level modules to accidentally override states. localparam securely isolates immutable constants.",
+      "localparam is the only one that supports string values.",
+      "It automatically applies One-Hot encoding."
+    ],
+    "correct_index": 1,
+    "explanation": "FSM state encodings are fundamental to the internal workings of a specific module. `define acts globally and will clash if two modules have an 'IDLE' state. A parameter can be externally overridden during instantiation, corrupting the FSM. localparam is safely locked inside its module."
+  },
+  {
+    "question": "What is the primary danger of a pure Mealy Machine output, and how is it mitigated?",
+    "options": [
+      "It consumes too much power; mitigated by clock gating.",
+      "It requires too many states; mitigated by switching to Moore.",
+      "Input glitches instantly propagate to the output; mitigated by inserting a Flip-Flop to create a Registered Mealy output.",
+      "It creates combinational loops; mitigated by removing feedback paths."
+    ],
+    "correct_index": 2,
+    "explanation": "Because a Mealy output is calculated combinationally using the current state AND the live external inputs, any noise or glitch on the inputs will instantly spike the output. Registering the output catches only the final stable value at the clock edge, acting as a glitch shield."
+  },
+  {
+    "question": "What does the synthesis attribute 'safe_fsm' instruct the compiler to build?",
+    "options": [
+      "A firewall to prevent unauthorized memory access.",
+      "Recovery logic that detects if a cosmic ray (SEU) flips the FSM into an undefined/illegal state, forcing it back to a safe reset state.",
+      "Redundant flip-flops for triple-modular redundancy.",
+      "A sequence detector to validate inputs."
+    ],
+    "correct_index": 1,
+    "explanation": "If radiation or extreme noise flips a bit, pushing a 5-state FSM into state 111 (which isn't coded), the FSM will lock up forever. 'safe_fsm' forces the synthesizer to automatically wire all unused flip-flop combinations back to the IDLE state."
+  },
+  {
+    "question": "How does One-Hot encoding allow FSMs to run at significantly higher clock frequencies than Binary encoding?",
+    "options": [
+      "It uses fewer flip-flops, reducing total mass.",
+      "It completely eliminates the need for wide, multi-bit combinational decoders, simplifying next-state logic to checking a single bit.",
+      "It operates on both the rising and falling edges of the clock.",
+      "It allows the clock network to be completely asynchronous."
+    ],
+    "correct_index": 1,
+    "explanation": "In binary encoding, identifying state '5' requires a wide AND gate (101). In One-Hot, state '5' is simply checking if bit[5] is High. This drastically reduces the depth of the combinational logic clouds, allowing the clock period to be shortened."
+  },
+  {
+    "question": "Which encoding style is heavily used for FSMs and pointers that must cross asynchronous clock domains?",
+    "options": [
+      "Binary Coding",
+      "One-Hot Coding",
+      "Gray Code",
+      "ASCII Coding"
+    ],
+    "correct_index": 2,
+    "explanation": "In Gray code, only one single bit flips during any state transition. If an asynchronous receiving clock samples the bus exactly as it changes, it will cleanly read either the old state or the new state. It is mathematically impossible to read a corrupted, intermediate garbage state."
+  },
+  {
+    "question": "What is the industry-standard (and safest) way to override a parameter when instantiating a module?",
+    "options": [
+      "Using defparam statements from the testbench.",
+      "Using Positional override (e.g., my_mod #(8, 4) u1).",
+      "Using Named override (e.g., my_mod #(.WIDTH(8), .DEPTH(4)) u1).",
+      "Modifying the localparam inside the sub-module."
+    ],
+    "correct_index": 2,
+    "explanation": "Named overrides explicitly bind the value to the exact parameter name. If a designer updates the sub-module and changes the order of the parameters, a positional override will silently map the wrong values to the wrong parameters, whereas a named override remains completely safe."
+  },
+  {
+    "question": "How do you model Inertial Delay in Verilog, and what physical phenomenon does it simulate?",
+    "options": [
+      "Intra-assignment delay (a <= #5 b); models long wire flight time.",
+      "Inter-assignment delay (#5 a = b); models thread pausing.",
+      "Continuous assignment delay (assign #5 y = a & b); acts as a glitch filter modeling the minimum energy required to switch a logic gate.",
+      "Clock jitter modeling; simulates power supply noise."
+    ],
+    "correct_index": 2,
+    "explanation": "Inertial delay mimics the physical inertia of a CMOS transistor. If a pulse is narrower than the specified delay (e.g., a 3ns glitch hits an assign #5), the gate doesn't have enough time to charge and flip, so the glitch is swallowed and ignored entirely."
+  },
+  {
+    "question": "How is Transport Delay coded, and how does its behavior differ from Inertial Delay?",
+    "options": [
+      "Coded using intra-assignment non-blocking logic (y <= #5 a); it propagates ALL pulses and glitches perfectly, shifted in time, modeling wire flight time.",
+      "Coded using continuous assignment; it filters all glitches.",
+      "Coded using defparam; it slows down the simulation engine.",
+      "Coded using wait statements; it acts as a clock divider."
+    ],
+    "correct_index": 0,
+    "explanation": "Transport delay models a signal traveling down a long copper wire. The wire doesn't filter logic; whatever waveform enters (including tiny nanosecond glitches) emerges exactly the same at the other end, just delayed by the flight time. The non-blocking delay schedules every single change perfectly into the future."
+  },
+  {
+    "question": "What is the critical functional difference between '@(posedge clk)' and 'wait(enable == 1)'?",
+    "options": [
+      "No difference; they are interchangeable.",
+      "@ is edge-sensitive and pauses until a transition occurs; wait is level-sensitive and proceeds immediately if the condition is already true.",
+      "@ only works on clocks; wait works on data.",
+      "wait is synthesizable; @ is strictly for testbenches."
+    ],
+    "correct_index": 1,
+    "explanation": "The @ operator is a trigger. It must actively see the signal cross from 0 to 1. If 'enable' is already 1, wait(enable == 1) will just pass right through without stalling the thread for even a single delta cycle."
+  },
+  {
+    "question": "What is the difference between the $stop and $finish system tasks?",
+    "options": [
+      "$stop exits the simulator to the OS; $finish restarts the simulation.",
+      "$stop pauses execution and drops the user into an interactive CLI debug mode; $finish completely terminates the simulator process.",
+      "$stop is synthesizable; $finish is not.",
+      "$stop clears all memory; $finish dumps waveforms."
+    ],
+    "correct_index": 1,
+    "explanation": "During verification, if an error is caught, $stop is highly useful as it halts simulation time but keeps the engine active, allowing the engineer to probe variables via the command line. $finish kills the EDA tool entirely, returning control to Linux/Windows."
+  },
+  {
+    "question": "Why is it mandatory to pass a Seed to the $random system task during advanced verification?",
+    "options": [
+      "To prevent the simulator from crashing.",
+      "To force the simulator to use hardware-accelerated RNG.",
+      "To ensure different stimulus patterns per run, while allowing engineers to hardcode a failing seed later to exactly recreate and debug a specific failure.",
+      "To keep the random numbers strictly positive."
+    ],
+    "correct_index": 2,
+    "explanation": "Software random number generators are pseudo-random. If unseeded, they generate the exact same sequence every boot. Providing a unique seed (like system time) creates randomized testing. If Test Run 402 fails, passing Seed 402 back into the simulator recreates the exact chain of events that caused the bug."
+  },
+  {
+    "question": "What does the %m format specifier output when used inside a $display statement?",
+    "options": [
+      "The current simulation time.",
+      "The memory usage of the simulator.",
+      "The full hierarchical path name of the module instance currently executing the display statement.",
+      "The decimal value of the next variable."
+    ],
+    "correct_index": 2,
+    "explanation": "If a sub-module is instantiated 50 times in a SoC, and one of them throws an error, printing %m will output something like 'tb_top.cpu_core.alu_unit_7', instantly pinpointing exactly which physical instance triggered the message."
+  },
+  {
+    "question": "How do you read a command-line argument (like a debug flag) passed from the host OS directly into the Verilog simulation environment?",
+    "options": [
+      "Using $readmemh",
+      "Using Plusargs ($test$plusargs or $value$plusargs)",
+      "Using `define macros",
+      "Using $fscanf"
+    ],
+    "correct_index": 1,
+    "explanation": "Plusargs allow dynamic control of testbenches without recompiling. If you run 'vsim +DEBUG_MODE', the Verilog code if($test$plusargs(\"DEBUG_MODE\")) will evaluate to true and activate extra logging."
+  },
+  {
+    "question": "Why should testbench stimulus (driving inputs to the DUT) be applied on the negative clock edge or via non-blocking assignments?",
+    "options": [
+      "To save simulator memory.",
+      "To prevent Active-Region Race Conditions. If the testbench drives data exactly as the DUT samples it on the posedge, the DUT might sample the old value or the new value unpredictably.",
+      "Because testbenches cannot generate positive edges.",
+      "To force the synthesis tool to build falling-edge flip-flops."
+    ],
+    "correct_index": 1,
+    "explanation": "If both the testbench assignment (a = 1) and the DUT sampling (always @(posedge clk)) occur in the exact same Active Region, it creates a race. Driving data on the negedge ensures the data is absolutely stable when the DUT looks at it a half-cycle later."
+  },
+  {
+    "question": "What happens if you declare a variable inside an always block but forget to define its bit width? (e.g., wire out;)",
+    "options": [
+      "It defaults to 32 bits.",
+      "It defaults to 1 bit. If connected to a 32-bit bus, the upper 31 bits are silently truncated.",
+      "The compiler throws a fatal error.",
+      "It dynamically sizes to match the connected signal."
+    ],
+    "correct_index": 1,
+    "explanation": "Verilog-95 legacy rules dictate that undeclared or unsized wires default to 1 bit. If you map a 32-bit output to it, the compiler quietly clips off the top 31 bits. This is why modern standards mandate the use of `default_nettype none."
+  },
+  {
+    "question": "What is the difference between case, casez, and casex?",
+    "options": [
+      "case matches binary; casez matches hex; casex matches octal.",
+      "case requires exact matches; casez treats Z as a don't care; casex treats both X and Z as don't cares.",
+      "case is synthesizable; casez and casex are not.",
+      "There is no difference; they are synonymous."
+    ],
+    "correct_index": 1,
+    "explanation": "casez is highly useful for creating priority encoders (matching patterns like 4'b1??0). casex is considered dangerous in RTL because if upstream logic accidentally generates a corrupted X, casex will treat it as a wildcard match and swallow the error silently."
+  },
+  {
+    "question": "Examine this code: \nalways @(posedge clk) begin\n  a <= a ^ b;\n  b <= a ^ b;\n  a <= a ^ b;\nend\nDoes this swap variables A and B?",
+    "options": [
+      "Yes, it successfully implements the XOR swap algorithm.",
+      "No. Non-blocking assignments evaluate simultaneously using old values. Both variables are overwritten with the exact same (old_a ^ old_b) result, destroying the data.",
+      "Yes, but only if it takes 3 clock cycles.",
+      "No, it creates a combinational loop."
+    ],
+    "correct_index": 1,
+    "explanation": "This is the ultimate whiteboard trap. In software (C++), XOR swapping works because equations execute sequentially. In Verilog, all three lines read the cached values from the Active region simultaneously. Thus, A and B are both assigned the exact same calculated result in the NBA region."
+  },
+  {
+    "question": "What does a Verilog compiler do if you assign a 3-bit signal to a 5-bit bus?",
+    "options": [
+      "It throws a syntax error.",
+      "It automatically zero-extends the upper 2 bits (or sign-extends if the 3-bit signal was declared 'signed').",
+      "It randomly assigns 1s or 0s to the upper bits.",
+      "It leaves the upper 2 bits as High-Impedance (Z)."
+    ],
+    "correct_index": 1,
+    "explanation": "Verilog is extremely permissive with bus width mismatches. It pads smaller assignments to fit the destination LHS. By default, it pads with zeros. If the RHS was explicitly declared as a signed 2's complement number, it copies the sign bit to preserve the negative value."
+  },
+  {
+    "question": "Is the system task $readmemh synthesizable?",
+    "options": [
+      "Never. It relies on the host PC's hard drive.",
+      "For ASICs, no. For FPGAs, yes. The synthesis tool reads the hex file during compilation and bakes the data directly into the bitstream to initialize BRAM.",
+      "Yes, it builds an SD card controller in hardware.",
+      "Only if placed inside an always block."
+    ],
+    "correct_index": 1,
+    "explanation": "While system tasks usually denote simulation-only software behavior, FPGA toolchains specifically intercept $readmemh. Instead of trying to access a file at runtime, the compiler injects the file's data into the initial state of the silicon configuration file."
+  },
+  {
+    "question": "What is the purpose of a genvar variable?",
+    "options": [
+      "To act as a generic variable that can hold strings, ints, or reals.",
+      "To serve as an iteration index exclusively for 'generate' loops to instantiate multiple hardware blocks at compile time. It cannot be modified during simulation.",
+      "To track the generation cycle of a clock.",
+      "To pass parameters between testbenches."
+    ],
+    "correct_index": 1,
+    "explanation": "A genvar exists strictly in the software compiler. When you write a generate-for loop using a genvar, the compiler unrolls the loop and physically copy-pastes the hardware instances. Once simulation or synthesis begins, the genvar ceases to exist."
+  },
+  {
+    "question": "If Module A is compiled with `timescale 1ns/1ps, and Module B is compiled with `timescale 1us/1ns, what is the global precision of the simulation?",
+    "options": [
+      "1 ns",
+      "1 ps",
+      "1 us",
+      "It throws an error for mismatch."
+    ],
+    "correct_index": 1,
+    "explanation": "The simulator calculates delays locally for each module based on their units, but the master time-wheel engine must tick at the smallest precision defined anywhere in the entire design. Thus, the global precision drops to 1ps, which can significantly slow down the simulation."
+  },
+  {
+    "question": "What happens if a signal driving an output port is left unconnected?",
+    "options": [
+      "The output floats at X.",
+      "The output floats at Z.",
+      "The synthesis tool identifies it as 'dead code' and optimizes away (deletes) all internal logic gates leading up to that port.",
+      "The compiler inserts a pull-down resistor."
+    ],
+    "correct_index": 2,
+    "explanation": "Synthesis tools are highly aggressive at saving silicon area. If an output is unconnected, it has no observable effect on the chip. The tool works backward, identifying and deleting all logic branches that were solely dedicated to calculating that dead output."
+  },
+  {
+    "question": "What does assign (strong1, weak0) y = a; define?",
+    "options": [
+      "Drive Strength. It pulls with VDD force for a 1, and a weak pull-down resistor force for a 0.",
+      "Signal priority in an event queue.",
+      "Gate propagation delay bounds.",
+      "Nothing, it is a syntax error."
+    ],
+    "correct_index": 0,
+    "explanation": "Drive strength modifiers tell the simulator how to resolve contention. If a 'strong' driver pushes a 1 and a 'weak' driver pushes a 0 on the exact same wire, the strong driver wins and the wire resolves to 1 (instead of X). This perfectly models physical I/O pads and open-drain lines."
+  },
+  {
+    "question": "What is a major limitation of a static Verilog Task compared to an automatic Task?",
+    "options": [
+      "Static tasks cannot contain timing delays.",
+      "Static tasks cannot read global module variables.",
+      "Static tasks share a single memory space. If called concurrently from multiple threads, variables will overwrite each other.",
+      "Static tasks cannot accept input arguments."
+    ],
+    "correct_index": 2,
+    "explanation": "Without the 'automatic' keyword, a task's variables exist permanently in one memory location. If Thread A calls the task, and Thread B calls the same task 2ns later, Thread B will overwrite the variables Thread A is currently using, causing catastrophic corruption."
+  },
+  {
+    "question": "Can an 'assign' statement possess an explicit sensitivity list like an 'always' block?",
+    "options": [
+      "Yes, using the @ operator.",
+      "No. Continuous assignments are implicitly sensitive to all signals evaluated on their right-hand side.",
+      "Yes, but only for testbenches.",
+      "No, because assign statements do not evaluate continuously."
+    ],
+    "correct_index": 1,
+    "explanation": "A continuous assignment (assign y = a & b;) represents a physical wire soldered to a gate output. Any time a physical voltage changes on 'a' or 'b', the output 'y' changes instantly. Therefore, an explicit sensitivity list is conceptually redundant and syntactically illegal."
+  },
+  {
+    "question": "How are arguments passed to Tasks and Functions in standard Verilog?",
+    "options": [
+      "Pass by Reference",
+      "Pass by Value",
+      "Pass by Pointer",
+      "Pass by Global Macro"
+    ],
+    "correct_index": 1,
+    "explanation": "Standard Verilog strictly uses Pass by Value. When a task is invoked, the values are copied into the task's local memory. When the task completes, the output variables are copied back to the caller. (SystemVerilog introduced 'ref' for true pass by reference)."
+  },
+  {
+    "question": "You define a parameter W = 8. You write: assign out = -1; where 'out' is a wire of width W. What is the binary value of 'out'?",
+    "options": [
+      "8'b0000_0001",
+      "8'b1000_0001",
+      "8'b1111_1111",
+      "8'bxxxx_xxxx"
+    ],
+    "correct_index": 2,
+    "explanation": "In binary 2's complement arithmetic, -1 is represented by all 1s. The compiler evaluates the right side as a signed -1, looks at the left side to see it is 8 bits wide, and safely sign-extends the all-1s pattern across the entire 8-bit bus, yielding 8'b1111_1111."
+  }
+]
