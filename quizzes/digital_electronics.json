@@ -8,7 +8,7 @@
       "NOR gates cannot implement non-inverting Boolean expressions."
     ],
     "correct_index": 1,
-    "explanation": "In CMOS technology, electrons (majority carriers in NMOS) have 2-3x higher mobility than holes (majority carriers in PMOS)[cite: 2]. A NAND gate puts the faster NMOS transistors in series (pull-down network) and the slower PMOS in parallel (pull-up network)[cite: 2]. A NOR gate forces the slower PMOS into series, which requires massive upsizing to match speeds, resulting in larger area and capacitance[cite: 2]."
+    "explanation": "In CMOS technology, electrons (majority carriers in NMOS) have 2-3x higher mobility than holes (majority carriers in PMOS). A NAND gate puts the faster NMOS transistors in series (pull-down network) and the slower PMOS in parallel (pull-up network). A NOR gate forces the slower PMOS into series, which requires massive upsizing to match speeds, resulting in larger area and capacitance."
   },
   {
     "question": "What is the strict minimum number of 2-input NAND gates required to construct a 2-input XOR gate?",
@@ -19,7 +19,7 @@
       "6"
     ],
     "correct_index": 1,
-    "explanation": "It strictly requires 4 NAND gates[cite: 2]. Circuit visualization: Gate 1 takes inputs A and B[cite: 2]. Gate 2 takes A and the output of Gate 1[cite: 2]. Gate 3 takes B and the output of Gate 1[cite: 2]. Gate 4 takes the outputs of Gate 2 and Gate 3 to produce the final XOR output[cite: 2]."
+    "explanation": "It strictly requires 4 NAND gates. Circuit visualization: Gate 1 takes inputs A and B. Gate 2 takes A and the output of Gate 1. Gate 3 takes B and the output of Gate 1. Gate 4 takes the outputs of Gate 2 and Gate 3 to produce the final XOR output."
   },
   {
     "question": "What implicit Boolean logic function is created when multiple Open-Drain outputs are tied to a single shared wire with a pull-up resistor?",
@@ -30,7 +30,7 @@
       "High-Impedance Bus"
     ],
     "correct_index": 1,
-    "explanation": "This perfectly mimics a Wired-AND behavior[cite: 2]. If any single open-drain gate outputs a 0, it turns on its NMOS pull-down transistor and pulls the entire shared wire to Ground (0)[cite: 2]. The wire will only go High (1) if all connected gates are OFF, allowing the external resistor to pull it High[cite: 2]."
+    "explanation": "This perfectly mimics a Wired-AND behavior. If any single open-drain gate outputs a 0, it turns on its NMOS pull-down transistor and pulls the entire shared wire to Ground (0). The wire will only go High (1) if all connected gates are OFF, allowing the external resistor to pull it High."
   },
   {
     "question": "How can a 2-input XOR gate be dynamically used as a programmable inverter?",
@@ -41,7 +41,7 @@
       "Leave one input floating."
     ],
     "correct_index": 1,
-    "explanation": "If one input is tied to a control signal set to 1, the XOR gate acts as an Inverter (A ⊕ 1 = A')[cite: 2]. If the control signal is set to 0, it acts as a transparent Buffer (A ⊕ 0 = A)[cite: 2]."
+    "explanation": "If one input is tied to a control signal set to 1, the XOR gate acts as an Inverter (A ⊕ 1 = A'). If the control signal is set to 0, it acts as a transparent Buffer (A ⊕ 0 = A)."
   },
   {
     "question": "What is the primary function of a Schmitt Trigger logic gate?",
@@ -52,7 +52,7 @@
       "To operate without reference to a power supply."
     ],
     "correct_index": 1,
-    "explanation": "A Schmitt Trigger has Hysteresis, meaning it uses a higher voltage threshold for a rising input (0 to 1) and a lower voltage threshold for a falling input (1 to 0)[cite: 2]. This is used to clean up noisy, slow-transitioning signals (like debouncing a physical button) into crisp digital edges[cite: 2]."
+    "explanation": "A Schmitt Trigger has Hysteresis, meaning it uses a higher voltage threshold for a rising input (0 to 1) and a lower voltage threshold for a falling input (1 to 0). This is used to clean up noisy, slow-transitioning signals (like debouncing a physical button) into crisp digital edges."
   },
   {
     "question": "Why is a CMOS Transmission Gate (TG) superior to a single NMOS pass-transistor?",
@@ -63,7 +63,7 @@
       "It provides infinite drive strength without output buffering."
     ],
     "correct_index": 1,
-    "explanation": "A Transmission Gate wires an NMOS and a PMOS in parallel[cite: 2]. An NMOS alone passes a strong 0 but a degraded 1, while a PMOS passes a strong 1 but a degraded 0[cite: 2]. Together, they act as an ideal bidirectional switch passing rail-to-rail voltages without drops[cite: 2]."
+    "explanation": "A Transmission Gate wires an NMOS and a PMOS in parallel. An NMOS alone passes a strong 0 but a degraded 1, while a PMOS passes a strong 1 but a degraded 0. Together, they act as an ideal bidirectional switch passing rail-to-rail voltages without drops."
   },
   {
     "question": "According to the Consensus Theorem, which term is mathematically redundant in the expression: Y = AB + A'C + BC?",
@@ -74,7 +74,7 @@
       "None; the expression is irreducible."
     ],
     "correct_index": 2,
-    "explanation": "The term BC is redundant (the consensus term) and can be completely dropped[cite: 2]. This occurs because the variables in BC (B and C) are paired with a variable A and its exact complement A' in the other two terms[cite: 2]. Thus, Y = AB + A'C[cite: 2]."
+    "explanation": "The term BC is redundant (the consensus term) and can be completely dropped. This occurs because the variables in BC (B and C) are paired with a variable A and its exact complement A' in the other two terms. Thus, Y = AB + A'C."
   },
   {
     "question": "Can the Boolean expression Y = AB' + A'C + BC be simplified using the Consensus Theorem?",
@@ -85,7 +85,7 @@
       "Yes, it simplifies to AB' + BC."
     ],
     "correct_index": 2,
-    "explanation": "This is a classic trap[cite: 2]. The consensus of the terms A·B' and A'·C is mathematically B'·C[cite: 2]. Because the third term provided in the equation is BC, and not B'C, the theorem does NOT apply[cite: 2]. The expression cannot be minimized[cite: 2]."
+    "explanation": "This is a classic trap. The consensus of the terms A·B' and A'·C is mathematically B'·C. Because the third term provided in the equation is BC, and not B'C, the theorem does NOT apply. The expression cannot be minimized."
   },
   {
     "question": "What does the Boolean expression Y = A + A'B logically simplify to?",
@@ -96,7 +96,7 @@
       "B"
     ],
     "correct_index": 1,
-    "explanation": "Using a variation of the Distributive Law, the expression expands to: Y = (A + A')(A + B)[cite: 2]. Since (A + A') always equals 1, it leaves Y = A + B[cite: 2]."
+    "explanation": "Using a variation of the Distributive Law, the expression expands to: Y = (A + A')(A + B). Since (A + A') always equals 1, it leaves Y = A + B."
   },
   {
     "question": "Under the Principle of Duality in Boolean Algebra, how is the dual of an identity derived?",
@@ -107,7 +107,7 @@
       "Invert the output of the equation only."
     ],
     "correct_index": 1,
-    "explanation": "The Principle of Duality requires replacing all OR operators with AND operators, all ANDs with ORs, 1s with 0s, and 0s with 1s[cite: 2]. Variables must NOT be complemented[cite: 2]."
+    "explanation": "The Principle of Duality requires replacing all OR operators with AND operators, all ANDs with ORs, 1s with 0s, and 0s with 1s. Variables must NOT be complemented."
   },
   {
     "question": "A 3-variable logic function is defined by Minterms: Y = Σm(0, 1, 4, 7). What is its canonical Maxterm (POS) representation?",
@@ -118,7 +118,7 @@
       "ΠM(1, 2, 5, 6)"
     ],
     "correct_index": 1,
-    "explanation": "Maxterms are simply the missing indices from the Minterm set[cite: 2]. For a 3-variable function, there are 8 total states (0 to 7)[cite: 2]. The missing numbers are 2, 3, 5, and 6, yielding Y = ΠM(2, 3, 5, 6)[cite: 2]."
+    "explanation": "Maxterms are simply the missing indices from the Minterm set. For a 3-variable function, there are 8 total states (0 to 7). The missing numbers are 2, 3, 5, and 6, yielding Y = ΠM(2, 3, 5, 6)."
   },
   {
     "question": "Why must the row and column coordinates of a Karnaugh Map be labeled using Gray Code (00, 01, 11, 10)?",
@@ -129,7 +129,7 @@
       "To eliminate static timing analysis paths."
     ],
     "correct_index": 1,
-    "explanation": "In Gray code, only 1 bit changes between any sequential columns/rows[cite: 2]. This guarantees that visually adjacent cells in the K-Map differ by only one variable, making them mathematically eligible for the minimization rule Ax + Ax' = A[cite: 2]."
+    "explanation": "In Gray code, only 1 bit changes between any sequential columns/rows. This guarantees that visually adjacent cells in the K-Map differ by only one variable, making them mathematically eligible for the minimization rule Ax + Ax' = A."
   },
   {
     "question": "What defines an Essential Prime Implicant (EPI) on a K-Map?",
@@ -140,7 +140,7 @@
       "An implicant that contains an odd number of minterms."
     ],
     "correct_index": 1,
-    "explanation": "An EPI covers a '1' cell that is exclusive to it[cite: 2]. Because that specific '1' cannot be grouped anywhere else, the Essential Prime Implicant must unconditionally be included in the final minimized Boolean equation[cite: 2]."
+    "explanation": "An EPI covers a '1' cell that is exclusive to it. Because that specific '1' cannot be grouped anywhere else, the Essential Prime Implicant must unconditionally be included in the final minimized Boolean equation."
   },
   {
     "question": "How does K-Map logic minimization fundamentally help eliminate Static-1 Hazards?",
@@ -151,7 +151,7 @@
       "By inserting flip-flops between combinational clouds."
     ],
     "correct_index": 1,
-    "explanation": "A Static-1 Hazard happens when input transitions jump between two different groupings on the K-Map, causing a momentary dip in output[cite: 2]. Drawing an extra, algebraically redundant circle that overlaps both groups adds the Consensus Term to the logic, holding the output high during the transition[cite: 2]."
+    "explanation": "A Static-1 Hazard happens when input transitions jump between two different groupings on the K-Map, causing a momentary dip in output. Drawing an extra, algebraically redundant circle that overlaps both groups adds the Consensus Term to the logic, holding the output high during the transition."
   },
   {
     "question": "What does a checkerboard pattern of alternating 1s and 0s across a K-Map physically signify?",
@@ -162,7 +162,7 @@
       "An invalid logic function that cannot be synthesized."
     ],
     "correct_index": 1,
-    "explanation": "A checkerboard pattern means no two 1s are adjacent vertically or horizontally, so zero grouping is possible[cite: 2]. This pattern is the mathematical signature of XOR/XNOR gates[cite: 2]."
+    "explanation": "A checkerboard pattern means no two 1s are adjacent vertically or horizontally, so zero grouping is possible. This pattern is the mathematical signature of XOR/XNOR gates."
   },
   {
     "question": "What is the fully minimized Boolean expression for the 3-variable function F = Σm(0, 2, 4, 6)?",
@@ -173,7 +173,7 @@
       "A + B"
     ],
     "correct_index": 2,
-    "explanation": "The binary representations are 000, 010, 100, 110[cite: 2]. Notice that the LSB (variable C) is exactly 0 in all four cases, while A and B cycle through every possible combination[cite: 2]. This isolates to F = C'[cite: 2]."
+    "explanation": "The binary representations are 000, 010, 100, 110. Notice that the LSB (variable C) is exactly 0 in all four cases, while A and B cycle through every possible combination. This isolates to F = C'."
   },
   {
     "question": "What is the Boolean algebraic equation for a 2:1 Multiplexer with Select line S and Data inputs I0, I1?",
@@ -184,7 +184,7 @@
       "Y = S' · I0' + S · I1'"
     ],
     "correct_index": 1,
-    "explanation": "A MUX selects I0 when S is 0 (S'), and selects I1 when S is 1 (S)[cite: 3]. Therefore, Y = S'I0 + SI1[cite: 3]."
+    "explanation": "A MUX selects I0 when S is 0 (S'), and selects I1 when S is 1 (S). Therefore, Y = S'I0 + SI1."
   },
   {
     "question": "How do you physically wire a 2:1 MUX to implement an AND gate (A AND B)?",
@@ -195,7 +195,7 @@
       "Connect S = B, I0 = 1, I1 = A."
     ],
     "correct_index": 1,
-    "explanation": "Connect A to the Select line (S=A). Connect I0 to GND (0). Connect I1 to B. The MUX equation becomes Y = A'(0) + A(B) = A · B[cite: 3]."
+    "explanation": "Connect A to the Select line (S=A). Connect I0 to GND (0). Connect I1 to B. The MUX equation becomes Y = A'(0) + A(B) = A · B."
   },
   {
     "question": "What is the formula to calculate how many 2:1 MUXes are needed to build an N:1 MUX?",
@@ -206,7 +206,7 @@
       "log2(N)"
     ],
     "correct_index": 1,
-    "explanation": "An N:1 MUX requires exactly N - 1 of 2:1 MUXes[cite: 3]. For example, building an 8:1 MUX requires exactly 7 MUXes (8 - 1 = 7)[cite: 3]."
+    "explanation": "An N:1 MUX requires exactly N - 1 of 2:1 MUXes. For example, building an 8:1 MUX requires exactly 7 MUXes (8 - 1 = 7)."
   },
   {
     "question": "How can a 2:1 MUX be abusively wired to create a Level-Sensitive D-Latch?",
@@ -217,7 +217,7 @@
       "S = Y, I0 = Clk, I1 = D"
     ],
     "correct_index": 1,
-    "explanation": "Connect Clock to the Select line. Connect Data to I1. Route the MUX Output (Y) back into I0[cite: 3]. When Clk=1, Y=D (transparent). When Clk=0, Y=Y (holds previous state)[cite: 3]. Note: This forms a combinational loop frowned upon by STA tools[cite: 3]."
+    "explanation": "Connect Clock to the Select line. Connect Data to I1. Route the MUX Output (Y) back into I0. When Clk=1, Y=D (transparent). When Clk=0, Y=Y (holds previous state). Note: This forms a combinational loop frowned upon by STA tools."
   },
   {
     "question": "What is the fundamental logical relationship between a Binary Decoder and Boolean algebra?",
@@ -228,7 +228,7 @@
       "It acts as a hardware-level Gray code converter."
     ],
     "correct_index": 1,
-    "explanation": "A Decoder activates exactly one output line for any given input combination[cite: 3]. Thus, its outputs represent every single Minterm[cite: 3]. Feeding these outputs into an OR gate can implement ANY Sum of Products (SOP) boolean function[cite: 3]."
+    "explanation": "A Decoder activates exactly one output line for any given input combination. Thus, its outputs represent every single Minterm. Feeding these outputs into an OR gate can implement ANY Sum of Products (SOP) boolean function."
   },
   {
     "question": "What catastrophic flaw in a standard Encoder does a Priority Encoder resolve?",
@@ -239,7 +239,7 @@
       "Setup-time violations on input synchronization registers."
     ],
     "correct_index": 1,
-    "explanation": "If TWO inputs on a basic encoder go High simultaneously, the output binary code becomes corrupt (an overlapping logical OR)[cite: 3]. A Priority Encoder assigns a strict hierarchy, ignoring lower-priority inputs when multiple are active[cite: 3]."
+    "explanation": "If TWO inputs on a basic encoder go High simultaneously, the output binary code becomes corrupt (an overlapping logical OR). A Priority Encoder assigns a strict hierarchy, ignoring lower-priority inputs when multiple are active."
   },
   {
     "question": "How do you construct a 1-bit Full Adder using only Half Adders?",
@@ -250,7 +250,7 @@
       "2 Half Adders and 1 AND gate."
     ],
     "correct_index": 1,
-    "explanation": "It requires exactly Two Half Adders and one OR gate[cite: 3]. HA1 adds A and B. HA2 adds the sum of HA1 to Cin. The final Carry Out is generated by passing the carry from both Half Adders through an OR gate[cite: 3]."
+    "explanation": "It requires exactly Two Half Adders and one OR gate. HA1 adds A and B. HA2 adds the sum of HA1 to Cin. The final Carry Out is generated by passing the carry from both Half Adders through an OR gate."
   },
   {
     "question": "What is the fundamental flaw of a Ripple Carry Adder (RCA), and how does a Carry Look-Ahead Adder (CLA) fix it?",
@@ -261,7 +261,7 @@
       "RCA suffers from dynamic hazards; CLA buffers all intermediate paths."
     ],
     "correct_index": 1,
-    "explanation": "In an RCA, the MSB cannot compute its sum until the carry ripples through every single previous bit stage, making the delay O(N)[cite: 3]. A CLA calculates Carry signals for all bits simultaneously in parallel using Generate (G) and Propagate (P) logic, breaking the critical path[cite: 3]."
+    "explanation": "In an RCA, the MSB cannot compute its sum until the carry ripples through every single previous bit stage, making the delay O(N). A CLA calculates Carry signals for all bits simultaneously in parallel using Generate (G) and Propagate (P) logic, breaking the critical path."
   },
   {
     "question": "How do CPUs perform arithmetic subtraction without having dedicated Subtractor circuits?",
@@ -272,7 +272,7 @@
       "By using a Carry Save Adder array."
     ],
     "correct_index": 1,
-    "explanation": "A Subtractor is a waste of silicon[cite: 3]. To compute A - B, the CPU logically inverts all bits of B using XOR gates and sets the initial Carry-In of the adder to 1[cite: 3]. This creates the 2's complement of B, executing A + (-B)[cite: 3]."
+    "explanation": "A Subtractor is a waste of silicon. To compute A - B, the CPU logically inverts all bits of B using XOR gates and sets the initial Carry-In of the adder to 1. This creates the 2's complement of B, executing A + (-B)."
   },
   {
     "question": "When building an N-bit by M-bit digital multiplier, what is the exact required bit-width of the output result register?",
@@ -283,7 +283,7 @@
       "N × M"
     ],
     "correct_index": 2,
-    "explanation": "The mathematical result of multiplication is strictly N + M bits wide[cite: 3]. For example, multiplying two 32-bit numbers requires a 64-bit output register to prevent any possibility of overflow[cite: 3]."
+    "explanation": "The mathematical result of multiplication is strictly N + M bits wide. For example, multiplying two 32-bit numbers requires a 64-bit output register to prevent any possibility of overflow."
   },
   {
     "question": "How do you divide a SIGNED (2's complement) binary number by 2 in hardware?",
@@ -294,7 +294,7 @@
       "Pass the number through a Wallace Tree multiplier."
     ],
     "correct_index": 1,
-    "explanation": "You must use an Arithmetic Right Shift[cite: 3]. If you just insert a 0 at the MSB (Logical Shift), a negative number instantly becomes positive. Replicating the sign bit preserves the negative magnitude[cite: 3]."
+    "explanation": "You must use an Arithmetic Right Shift. If you just insert a 0 at the MSB (Logical Shift), a negative number instantly becomes positive. Replicating the sign bit preserves the negative magnitude."
   },
   {
     "question": "What is the fundamental architectural difference between Combinational logic and Sequential logic?",
@@ -305,7 +305,7 @@
       "Sequential logic cannot implement arithmetic operations."
     ],
     "correct_index": 1,
-    "explanation": "Combinational logic (like adders and MUXes) reacts instantly to current inputs[cite: 4]. Sequential logic (like flip-flops and FSMs) utilizes feedback loops, allowing it to remember past states[cite: 4]."
+    "explanation": "Combinational logic (like adders and MUXes) reacts instantly to current inputs. Sequential logic (like flip-flops and FSMs) utilizes feedback loops, allowing it to remember past states."
   },
   {
     "question": "What happens if Set (S=1) and Reset (R=1) are asserted simultaneously in a basic NOR-based SR Latch?",
@@ -316,7 +316,7 @@
       "The latch ignores the inputs and holds state."
     ],
     "correct_index": 1,
-    "explanation": "Both NOR gates are forced to output 0, which breaks the fundamental rule that Q and Q' must be opposite[cite: 4]. If both inputs transition back to 0 simultaneously, the cross-coupled gates race each other, causing metastability[cite: 4]."
+    "explanation": "Both NOR gates are forced to output 0, which breaks the fundamental rule that Q and Q' must be opposite. If both inputs transition back to 0 simultaneously, the cross-coupled gates race each other, causing metastability."
   },
   {
     "question": "How does the Master-Slave D Flip-Flop achieve instantaneous edge-triggering using level-sensitive latches?",
@@ -327,7 +327,7 @@
       "By using an RC delay filter on the data path."
     ],
     "correct_index": 1,
-    "explanation": "Visually, think of two rooms in series[cite: 4]. When CLK=0, the Master room opens to let Data in, but the Slave room is locked. When CLK rises to 1, the Master door slams shut (locking the state), and the Slave door opens, passing the locked data to the output Q[cite: 4]."
+    "explanation": "Visually, think of two rooms in series. When CLK=0, the Master room opens to let Data in, but the Slave room is locked. When CLK rises to 1, the Master door slams shut (locking the state), and the Slave door opens, passing the locked data to the output Q."
   },
   {
     "question": "What is the 'Race Around Condition' in a level-sensitive JK Latch?",
@@ -338,7 +338,7 @@
       "Driving the J input with an unmatched clock tree."
     ],
     "correct_index": 1,
-    "explanation": "If J=1 and K=1, the latch is instructed to toggle[cite: 4]. If the clock remains High longer than the internal gate delay, the output toggles, feeds back to the inputs, and forces the latch to toggle again, oscillating wildly until the clock finally falls[cite: 4]."
+    "explanation": "If J=1 and K=1, the latch is instructed to toggle. If the clock remains High longer than the internal gate delay, the output toggles, feeds back to the inputs, and forces the latch to toggle again, oscillating wildly until the clock finally falls."
   },
   {
     "question": "What is the characteristic equation defining the next state of a T (Toggle) Flip-Flop?",
@@ -349,7 +349,7 @@
       "Both B and C are correct."
     ],
     "correct_index": 3,
-    "explanation": "A T Flip-Flop toggles when T=1[cite: 4]. The equation is Q_next = T ⊕ Q[cite: 4]. Because the Boolean expansion of XOR is (T·Q' + T'·Q), both options B and C represent the exact same logic[cite: 4]."
+    "explanation": "A T Flip-Flop toggles when T=1. The equation is Q_next = T ⊕ Q. Because the Boolean expansion of XOR is (T·Q' + T'·Q), both options B and C represent the exact same logic."
   },
   {
     "question": "How do you physically convert a D Flip-Flop into a T Flip-Flop?",
@@ -360,7 +360,7 @@
       "Tie D to VDD and use T as the clock."
     ],
     "correct_index": 1,
-    "explanation": "Since a D-FF passes its input directly (Q_next = D), and a T-FF requires Q_next = T ⊕ Q, you simply set D = T ⊕ Q by wiring an XOR gate between the T input, the Q feedback, and the D pin[cite: 4]."
+    "explanation": "Since a D-FF passes its input directly (Q_next = D), and a T-FF requires Q_next = T ⊕ Q, you simply set D = T ⊕ Q by wiring an XOR gate between the T input, the Q feedback, and the D pin."
   },
   {
     "question": "What is a major architectural advantage of a Ring Counter?",
@@ -371,7 +371,7 @@
       "It operates entirely asynchronously."
     ],
     "correct_index": 1,
-    "explanation": "A Ring counter recirculates a single '1' bit (Modulus = N)[cite: 4]. Because only one flip-flop is high at any given state, decoding a state requires zero AND gates; you simply tap the output of the specific flip-flop[cite: 4]."
+    "explanation": "A Ring counter recirculates a single '1' bit (Modulus = N). Because only one flip-flop is high at any given state, decoding a state requires zero AND gates; you simply tap the output of the specific flip-flop."
   },
   {
     "question": "What is the exact modulus (number of unique states) of an N-bit Johnson (Twisted Ring) Counter?",
@@ -382,7 +382,7 @@
       "2^N"
     ],
     "correct_index": 1,
-    "explanation": "Because the inverted output of the last flip-flop is fed back to the first, a Johnson counter fills up with 1s and then flushes with 0s[cite: 4]. This provides exactly 2N unique states (e.g., a 4-bit counter provides 8 states)[cite: 4]."
+    "explanation": "Because the inverted output of the last flip-flop is fed back to the first, a Johnson counter fills up with 1s and then flushes with 0s. This provides exactly 2N unique states (e.g., a 4-bit counter provides 8 states)."
   },
   {
     "question": "Why are Asynchronous (Ripple) Counters strictly avoided in modern high-speed VLSI design?",
@@ -393,7 +393,7 @@
       "They cannot count beyond Mod-16."
     ],
     "correct_index": 1,
-    "explanation": "In a ripple counter, only the first FF gets the true clock. Subsequent FFs are clocked by previous Q outputs[cite: 4]. This creates massive transition skew. For instance, transitioning 011 to 100 might briefly output 010 and 000, causing catastrophic false triggers if decoded[cite: 4]."
+    "explanation": "In a ripple counter, only the first FF gets the true clock. Subsequent FFs are clocked by previous Q outputs. This creates massive transition skew. For instance, transitioning 011 to 100 might briefly output 010 and 000, causing catastrophic false triggers if decoded."
   },
   {
     "question": "How many Flip-Flops are mathematically required to build a Mod-100 Counter?",
@@ -404,7 +404,7 @@
       "100"
     ],
     "correct_index": 1,
-    "explanation": "The formula for states is 2^K ≥ N[cite: 4]. For N = 100, 2^6 = 64 (insufficient), but 2^7 = 128 (sufficient)[cite: 4]. Therefore, 7 Flip-Flops are required[cite: 4]."
+    "explanation": "The formula for states is 2^K ≥ N. For N = 100, 2^6 = 64 (insufficient), but 2^7 = 128 (sufficient). Therefore, 7 Flip-Flops are required."
   },
   {
     "question": "In FSM design, what constitutes a 'Self-Starting' counter?",
@@ -415,7 +415,7 @@
       "A counter built entirely with T Flip-Flops."
     ],
     "correct_index": 1,
-    "explanation": "If a cosmic ray or noise glitches a Mod-5 counter into an unused state (e.g., 111), it could lock up infinitely[cite: 4]. A self-starting design maps 111 mathematically back to 000 so the counter instantly recovers[cite: 4]."
+    "explanation": "If a cosmic ray or noise glitches a Mod-5 counter into an unused state (e.g., 111), it could lock up infinitely. A self-starting design maps 111 mathematically back to 000 so the counter instantly recovers."
   },
   {
     "question": "How many unique states does a Maximal-Length N-bit Linear Feedback Shift Register (LFSR) cycle through?",
@@ -426,7 +426,7 @@
       "2^N"
     ],
     "correct_index": 2,
-    "explanation": "An LFSR cycles through 2^N - 1 states[cite: 4]. It purposely misses the all-zero state because an XOR of all zeros produces a 0, which would lock the shift register in a permanent all-zero loop[cite: 4]."
+    "explanation": "An LFSR cycles through 2^N - 1 states. It purposely misses the all-zero state because an XOR of all zeros produces a 0, which would lock the shift register in a permanent all-zero loop."
   },
   {
     "question": "What is the fundamental difference between a Moore Machine and a Mealy Machine?",
@@ -437,7 +437,7 @@
       "Mealy outputs depend strictly on the current state; Moore outputs depend on both state and inputs."
     ],
     "correct_index": 0,
-    "explanation": "A Moore machine's combinational output logic is driven exclusively by the state registers[cite: 5]. A Mealy machine's combinational output logic is driven by the state registers PLUS the live input signals, making it faster but prone to glitches[cite: 5]."
+    "explanation": "A Moore machine's combinational output logic is driven exclusively by the state registers. A Mealy machine's combinational output logic is driven by the state registers PLUS the live input signals, making it faster but prone to glitches."
   },
   {
     "question": "When designing a Sequence Detector for an N-bit pattern, how many states are required for a Moore Machine vs a Mealy Machine?",
@@ -448,7 +448,7 @@
       "Both require 2^N states."
     ],
     "correct_index": 1,
-    "explanation": "A Moore machine requires a dedicated 'Success' state at the very end just to assert the output High, demanding N+1 states[cite: 5]. A Mealy machine asserts the output during the transition from the (N-1)th state upon seeing the final correct input, needing only N states[cite: 5]."
+    "explanation": "A Moore machine requires a dedicated 'Success' state at the very end just to assert the output High, demanding N+1 states. A Mealy machine asserts the output during the transition from the (N-1)th state upon seeing the final correct input, needing only N states."
   },
   {
     "question": "How is the glitching flaw of a pure Mealy Machine resolved in industrial VLSI design?",
@@ -459,7 +459,7 @@
       "By avoiding sequence detectors altogether."
     ],
     "correct_index": 1,
-    "explanation": "Because Mealy outputs are tied to live inputs, input bounces cause immediate output glitches[cite: 5]. Placing a D-Flip-Flop on the output catches only the final stable value at the clock edge, creating a Glitch-Free Registered Mealy Machine[cite: 5]."
+    "explanation": "Because Mealy outputs are tied to live inputs, input bounces cause immediate output glitches. Placing a D-Flip-Flop on the output catches only the final stable value at the clock edge, creating a Glitch-Free Registered Mealy Machine."
   },
   {
     "question": "Why do FPGA designers predominantly favor One-Hot state encoding?",
@@ -470,7 +470,7 @@
       "It eliminates the need for a global clock network."
     ],
     "correct_index": 1,
-    "explanation": "One-Hot uses massive amounts of flip-flops (1 per state) but requires almost zero logic depth to decode the next state[cite: 5]. Because FPGAs have dedicated flip-flops in every logic element, it perfectly exploits the architecture for maximum speed[cite: 5]."
+    "explanation": "One-Hot uses massive amounts of flip-flops (1 per state) but requires almost zero logic depth to decode the next state. Because FPGAs have dedicated flip-flops in every logic element, it perfectly exploits the architecture for maximum speed."
   },
   {
     "question": "How is a basic Divide-by-2 clock divider circuit constructed?",
@@ -481,7 +481,7 @@
       "By using an analog LC filter."
     ],
     "correct_index": 1,
-    "explanation": "Feeding Q' back into D forces the flip-flop to toggle state on every single rising edge of the source clock[cite: 5]. This produces an output waveform with exactly half the frequency and a perfect 50% duty cycle[cite: 5]."
+    "explanation": "Feeding Q' back into D forces the flip-flop to toggle state on every single rising edge of the source clock. This produces an output waveform with exactly half the frequency and a perfect 50% duty cycle."
   },
   {
     "question": "Why is cascading flip-flops to build physical clock dividers (Ripple dividers) highly dangerous in ASIC design?",
@@ -492,7 +492,7 @@
       "It is perfectly safe and widely used in ASICs."
     ],
     "correct_index": 1,
-    "explanation": "Each cascaded flip-flop adds propagation delay (T_cq) to the clock path[cite: 5]. If data is passed between the root clock domain and the divided clock domain, the massive clock skew guarantees timing failures[cite: 5]. ASICs use synchronous clock enables instead[cite: 5]."
+    "explanation": "Each cascaded flip-flop adds propagation delay (T_cq) to the clock path. If data is passed between the root clock domain and the divided clock domain, the massive clock skew guarantees timing failures. ASICs use synchronous clock enables instead."
   },
   {
     "question": "How do you logically design a Divide-by-3 clock divider that achieves an exact 50% Duty Cycle?",
@@ -503,7 +503,7 @@
       "It is mathematically impossible without an analog PLL."
     ],
     "correct_index": 2,
-    "explanation": "A Mod-3 counter produces a 33% duty cycle (1 High, 2 Low)[cite: 5]. By capturing that output with a negative-edge flip-flop, you create a replica delayed by 0.5 cycles. ORing them together stretches the High pulse from 1 cycle to 1.5 cycles, yielding exactly 50%[cite: 5]."
+    "explanation": "A Mod-3 counter produces a 33% duty cycle (1 High, 2 Low). By capturing that output with a negative-edge flip-flop, you create a replica delayed by 0.5 cycles. ORing them together stretches the High pulse from 1 cycle to 1.5 cycles, yielding exactly 50%."
   },
   {
     "question": "What component is strictly necessary to build a Glitch-Free Clock Gating circuit?",
@@ -514,7 +514,7 @@
       "A Schmitt Trigger buffer."
     ],
     "correct_index": 1,
-    "explanation": "If Enable drops while the Clock is High, a raw AND gate immediately chops the clock pulse in half (a glitch)[cite: 5]. A Negative Latch ensures the Enable signal can only propagate to the AND gate while the clock is safely Low[cite: 5]."
+    "explanation": "If Enable drops while the Clock is High, a raw AND gate immediately chops the clock pulse in half (a glitch). A Negative Latch ensures the Enable signal can only propagate to the AND gate while the clock is safely Low."
   },
   {
     "question": "What is a Dynamic Hazard in a combinational logic circuit?",
@@ -525,7 +525,7 @@
       "A short circuit between VDD and GND."
     ],
     "correct_index": 1,
-    "explanation": "While a Static hazard glitches exactly once, a Dynamic hazard bounces multiple times during a single expected transition[cite: 5]. It strictly occurs in circuits with 3 or more logic levels where signals arrive at the final gate at wildly different times[cite: 5]."
+    "explanation": "While a Static hazard glitches exactly once, a Dynamic hazard bounces multiple times during a single expected transition. It strictly occurs in circuits with 3 or more logic levels where signals arrive at the final gate at wildly different times."
   },
   {
     "question": "According to the MTBF (Mean Time Between Failures) equation, what is the most effective way to resolve Flip-Flop Metastability?",
@@ -536,7 +536,7 @@
       "Decrease the temperature of the silicon."
     ],
     "correct_index": 1,
-    "explanation": "The MTBF equation contains an exponential term: e^(t_r / tau)[cite: 5]. The only way to exponentially reduce the probability of failure is to increase the resolution time (t_r), which is done by chaining multiple synchronizing flip-flops[cite: 5]."
+    "explanation": "The MTBF equation contains an exponential term: e^(t_r / tau). The only way to exponentially reduce the probability of failure is to increase the resolution time (t_r), which is done by chaining multiple synchronizing flip-flops."
   },
   {
     "question": "A Ring Oscillator is built using 5 inverters. If each inverter has a propagation delay of 200ps, what is the oscillation frequency?",
@@ -547,7 +547,7 @@
       "2.5 GHz"
     ],
     "correct_index": 1,
-    "explanation": "The frequency equation is f = 1 / (2 · N · t_pd)[cite: 5]. Plugging in the numbers: f = 1 / (2 · 5 · 200ps) = 1 / 2000ps[cite: 5]. 2000 picoseconds is 2 nanoseconds. 1 / 2ns equals 500 MHz[cite: 5]."
+    "explanation": "The frequency equation is f = 1 / (2 · N · t_pd). Plugging in the numbers: f = 1 / (2 · 5 · 200ps) = 1 / 2000ps. 2000 picoseconds is 2 nanoseconds. 1 / 2ns equals 500 MHz."
   },
   {
     "question": "A 10-bit Ring Counter is driven by a 100 MHz clock. What is the frequency of the output pulse observed on the Q pin of any single flip-flop?",
@@ -558,6 +558,6 @@
       "10 MHz"
     ],
     "correct_index": 3,
-    "explanation": "A Ring Counter circulates a single '1' bit through all N flip-flops[cite: 5]. Therefore, the '1' visits a specific flip-flop exactly once every N clock cycles[cite: 5]. F_out = 100 MHz / 10 = 10 MHz[cite: 5]."
+    "explanation": "A Ring Counter circulates a single '1' bit through all N flip-flops. Therefore, the '1' visits a specific flip-flop exactly once every N clock cycles. F_out = 100 MHz / 10 = 10 MHz."
   }
 ]
